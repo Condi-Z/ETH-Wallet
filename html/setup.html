@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>ETH Wallet</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <script src="../js/setup.js" charset="utf-8"></script>
+</head>
+
+<body>
+    <div class="layui-layout layui-layout-admin">
+
+        <div class="layui-header layui-bg-gray">
+            <div class="layui-logo  layui-bg-gray">Code</div>
+            <!-- 头部区域（可配合layui 已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left ">
+                <!-- 移动端显示 -->
+                <li class="layui-nav-item"><a href="assets.html">资产</a></li>
+                <li class="layui-nav-item"><a href="transaction.html">交易</a></li>
+                <li class="layui-nav-item"><a href="record.html">记录</a></li>
+                <li class="layui-nav-item layui-this"><a href="setup.html">设置</a></li>
+                <li class="layui-nav-item"><a href="dapp.html">应用</a></li>
+            </ul>>
+            <!-- <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item  layui-show-md-inline-block">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">账户:</label>
+                            <div class="layui-input-inline">
+                                <select id="selectaccount" lay-filter="selectaccount">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+
+                </li>
+                <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-more-vertical"></i>
+                    </a>
+                </li>
+            </ul> -->
+        </div>
+        <div class="layui-side layui-bg-gray">
+            <div class="layui-side-scroll">
+                <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+                <ul class="layui-nav layui-nav-tree" lay-filter="test">
+                    <li class="layui-nav-item">
+                        <p class="pid">基础设置</p>
+                    </li>
+                    <li class="layui-nav-item layui-this"><a href="javascript:;" class="Setjump token"
+                            data-type="display1">
+                            <i class="layui-icon layui-icon-component"
+                                style="font-size: 25px;"></i>&nbsp;&nbsp;&nbsp;代币</a>
+                    </li>
+                    <li class="layui-nav-item"><a href="javascript:;" class="Setjump" data-type="display2" onclick="">
+                            <i class="layui-icon layui-icon-website"
+                                style="font-size: 25px;"></i>&nbsp;&nbsp;&nbsp;网络</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <p class="pid">安全设置</p>
+                    </li>
+                    <li class="layui-nav-item"><a href="javascript:;" class="Setjump" data-type="display3">
+                            <i class="layui-icon layui-icon-user" style="font-size: 25px;"></i>&nbsp;&nbsp;&nbsp;账户</a>
+                    </li>
+                    <li class="layui-nav-item"><a href="javascript:;" class="Setjump" data-type="display4">
+                            <i class="layui-icon layui-icon-vercode"
+                                style="font-size: 25px;"></i>&nbsp;&nbsp;&nbsp;安全</a>
+                    </li>
+                    <li class="layui-nav-item">
+                        <p class="pid">更多信息</p>
+                    </li>
+                    <li class="layui-nav-item"><a href="javascript:;" class="Setjump" data-type="display5">
+                            <i class="layui-icon layui-icon-tips" style="font-size: 25px;"></i>&nbsp;&nbsp;&nbsp;关于</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="layui-body">
+            <!-- 内容主体区域 -->
+            <div id="container">
+                <section class="tab1" style="display:block;">
+
+                    <h1 style="text-align:center">已添加代币</h1>
+                    <table class="layui-hide" id="test2" lay-filter="test2"></table>
+                    <form class="layui-form layui-form-pane layui-col-xs12" action="" style="color: #4d6efb;">
+                        <div class=" layui-inline ">
+                            <label class=" layui-form-label"
+                                style="background-color: #f5f5f5 ;border-color: #f5f5f5;">选择网络</label>
+                            <div class="layui-input-inline">
+                                <select id="selectnet" lay-filter="selectnet">
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <form name="addtoken" class="layui-col-xs12">
+                        <div class="layui-form-item">
+                            <div class="layui-col-xs12">&nbsp;</div>
+                            <label class="layui-form-label">代币符号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" lay-verify="required" placeholder="请输入" autocomplete="off"
+                                    class="layui-input" id="symbol_1">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">合约地址</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" lay-verify="required" placeholder="请输入" autocomplete="off"
+                                    class="layui-input" id="address_1">
+                            </div>
+                        </div>
+                        <!-- <div class="layui-form-item layui-form-text">
+                            <label class="layui-form-label">abi</label>
+                            <div class="layui-input-block">
+                                <textarea name="desc" placeholder="请输入" class="layui-textarea" id="abi"></textarea>
+                            </div>
+                        </div> -->
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn shuaxing2 shuaxing3">添加代币</button>
+                            </div>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="tab1" style="display:none;">
+                    <h1 style="text-align:center">网络列表</h1>
+                    <table class="layui-hide" id="test" lay-filter="test"></table>
+
+
+                    <script type="text/html" id="barDemo">
+                    <a class="layui-btn layui-btn-warm layui-btn-xs" lay-event="qr">二维码</a>
+                  <a class="layui-btn layui-btn-xs" lay-event="edit">密钥</a>
+                  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+
+                </script>
+                    <script type="text/html" id="barDemo1">
+                    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+  
+                  </script>
+                    <form name="addnet" class="layui-col-xs9">
+                        <h1 style="text-align:center">添加网络</h1>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">网络名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" lay-verify="required" placeholder="请输入" autocomplete="off"
+                                    class="layui-input" id="id">
+
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">url</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" lay-verify="required" placeholder="请输入" autocomplete="off"
+                                    class="layui-input" id="net">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">network</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" lay-verify="required" placeholder="请输入" autocomplete="off"
+                                    class="layui-input" id="chainid">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">符号</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="" lay-verify="required" placeholder="请输入" autocomplete="off"
+                                    class="layui-input" id="url">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-input-block">
+                                <button type="button" class="layui-btn addnet" onclick="">立即提交</button>
+                            </div>
+                        </div>
+
+                    </form>
+                    <!-- <div class="layui-form-item">
+                        <label class="layui-form-label">选择网络</label>
+                        <div class="layui-input-block" >
+                          <select name="city" lay-verify="required" id="selectUserNum">
+                          </select>
+                        </div>
+                      </div> -->
+
+
+                    <!-- <form>
+                        <p>添加账户</p>
+                        <input type="text" id="name2" />
+                        <button type="button" onclick="add2()">添加</button>
+                    </form> -->
+                </section>
+                <section class="tab1" style="display:none;">
+                    <fieldset class="layui-elem-field layui-field-title" style="text-align:center;font-size: 100px;">
+                        <legend>账户列表</legend>
+                    </fieldset>
+                    <!-- <h1 style="text-align:center">账户列表</h1> -->
+                    <table class="layui-hide" id="test1" lay-filter="test1"></table>
+                    <div class="layui-tab" style="height: 250px;">
+                        <ul class="layui-tab-title">
+                            <li class="layui-this">创建账户</li>
+                            <li>密钥导入</li>
+                            <li>JSON导入</li>
+                            <li>二维码</li>
+                        </ul>
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <div class="layui-input-block">
+                                    <button type="button" class="layui-btn shuaxing1 layui-btn-radius"
+                                        style="background:linear-gradient(to right,#607bff,#3962ff);font-weight:600;font-size:18px;width: 750px;"
+                                        onclick="createoneaccount()">创建一个账户</button>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-input-block layui-col-xs12">
+                                    <input type="text" name="" style=" border-color:#4d6efb; width: 400px;"
+                                        lay-verify="required" placeholder="请输入密钥" autocomplete="off"
+                                        class="layui-input layui-col-xs6" id="Key">
+                                    <div class="layui-col-xs1">&nbsp;</div>
+                                    <button type="button" class="layui-btn shuaxing1 layui-col-xs4 layui-btn-radius"
+                                        style="background:linear-gradient(to right,#607bff,#3962ff);font-weight:600;font-size:18px;width: 250px;"
+                                        onclick="importaccount()">导入账户</button>
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-input-block">
+                                    <p>请先输入密码再选取文件</p>
+                                    <input type="password" name="" class="layui-input" lay-verify="required"
+                                        placeholder="请输入json文件密码" style=" border-color:#4d6efb; width: 400px;"
+                                        autocomplete="off" id="keyse2">
+                                    <p>选择json文件:</p>
+                                    <input id="keyse1" type="file" onchange="keystore(this)">                          
+                                       
+                                </div>
+                            </div>
+                            <div class="layui-tab-item">
+                                <div class="layui-input-block">
+                                    <h2>当前账户二维码:</h2>
+                                    <p id="qrcode"></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <!-- <div class="layui-input-block">
+                            <button type="button" class="layui-btn shuaxing1"
+                                onclick="createoneaccount()">创建一个账户</button>
+                        </div> -->
+                            <!-- <div class="layui-input-block">
+                            <input type="text" name="" lay-verify="required" placeholder="请输入密钥" autocomplete="off"
+                                class="layui-input" id="Key">
+                            <button type="button" class="layui-btn shuaxing1" onclick="importaccount()">导入账户</button>
+                        </div> -->
+                            <!-- <div class="layui-input-block">
+                            <p>请先输入密码再选取文件</p>
+                            <input type="text" name="" lay-verify="required" placeholder="请输入json文件密码"
+                                autocomplete="off"  class="layui-input" id="keyse2">
+                            <p>选择json文件:</p>
+                            <input id="keyse1" type="file" onchange="keystore(this)">
+                                                           
+                        </div> -->
+                            <div class="layui-col-xs12">&nbsp;</div>
+                            <div class="layui-col-xs12">&nbsp;</div>
+                            <div class="layui-col-xs12">&nbsp;</div>
+
+
+                        </div>
+                </section>
+                <section class="tab1" style="display:none;">
+                    <form name="" class="layui-col-md5">
+                        <fieldset class="layui-elem-field  layui-field-title">
+                            <legend>导出助记符</legend>
+                            <div class="layui-col-xs12">&nbsp;</div>
+                            <div class="layui-field-box">
+                                <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <input type="password" name="" lay-verify="required" placeholder="请输入密码"
+                                                autocomplete="off" class="layui-input" id="PassW">
+                                            <div class="layui-col-xs12">&nbsp;</div>
+                                            <button type="button" class="layui-btn" onclick="Exmnemonic()">确认导出</button>
+                                            <div class="layui-col-xs12">&nbsp;</div>
+                                            <p id="confirm"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset class="layui-elem-field layui-field-title">
+                            <legend>清空交易记录</legend>
+                            <div class="layui-col-xs12">&nbsp;</div>
+                            <div class="layui-field-box">
+                                <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <input type="password" name="" lay-verify="required" placeholder="请输入密码"
+                                                autocomplete="off" class="layui-input" id="rtrans">
+                                            <div class="layui-col-xs12">&nbsp;</div>
+                                            <button type="button" class="layui-btn" onclick="rts()">确认清空</button>
+                                            <div class="layui-col-xs12">&nbsp;</div>
+                                            <p id="confirm4"></p>
+                                            <!-- <p id="confirm5"></p> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                        <br>
+                        <fieldset class="layui-elem-field layui-field-title">
+                            <legend>重置钱包</legend>
+                            <div class="layui-col-xs12">&nbsp;</div>
+                            <div class="layui-field-box">
+                                <div class="layui-inline">
+                                    <div class="layui-form-item">
+                                        <div class="layui-input-block">
+                                            <input type="password" name="" lay-verify="required" placeholder="请输入密码"
+                                                autocomplete="off" class="layui-input" id="rset">
+                                            <div class="layui-col-xs12">&nbsp;</div>
+                                            <button type="button" class="layui-btn" onclick="Reset()">确认重置</button>
+                                            <div class="layui-col-xs12">&nbsp;</div>
+                                            <p id="confirm3"></p>
+                                            <!-- <script>
+                                                layer.open({
+                                                    type: 1,
+                                                    content: $("#confirm3")
+                                                })
+                                            </script> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </fieldset>
+                    </form>
+                </section>
+                <section class="tab1" style="display:none;">
+                    <fieldset class="layui-elem-field  layui-field-title">
+                        <legend>检测更新</legend>
+                        <div class="layui-col-xs12">&nbsp;</div>
+                        <button id="1" class="layui-btn" data-type="loading" onclick="update()">检测</button>
+                    </fieldset>
+                    <div class="layui-col-xs12">
+                        <p class="layui-col-xs1">当前版本：</p>
+                        <p id="version1"></p>
+                    </div>
+                    <div id="2" class="layui-card" style="display:none;">
+                        <div class="layui-card-header">正在下载，请稍后</div>
+                        <div class="layui-card-body">
+                            当前进度为:<p id="load2"></p>
+                        </div>
+                    </div>
+                    <div class="layui-col-xs12">&nbsp;</div>
+                    <div class="layui-col-xs12">&nbsp;</div>
+                    <!-- <fieldset class="layui-elem-field  layui-field-title">
+                        <legend>安装更新</legend>
+                        <div class="layui-col-xs12">&nbsp;</div>
+                        <button type="button" class="layui-btn" onclick="install()">安装</button>
+                    </fieldset> -->
+                </section>
+            </div>
+            <!-- <div style="padding: 15px;">内容主体区域。记得修改 layui.css 和 js 的路径</div> -->
+        </div>
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        当前操作账户为 ：0x3De98d10731d60056fd52a302808eeeCd07e9DD7
+    </div>
+    </div>
+    <script src="./layui/layui.js"></script>
+    <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+    <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+    <script>
+        //JS 
+        var fs = require("fs")
+        layui.use(['element', 'layer', 'util', 'table', 'form'], function () {
+            var element = layui.element
+                , layer = layui.layer
+                , util = layui.util
+                , $ = layui.$
+                , table = layui.table
+                , form = layui.form;
+            //项目调试路径
+            const accountpath = '../Accountfile/json/account.json';
+            const netpath = '../Accountfile/json/net.json';
+            const tokenlistpath = '../Accountfile/json/tokenlist.json';
+            //打包路径
+            // const accountpath = '../../Accountfile/json/account.json';
+            // const netpath = '../../Accountfile/json/net.json';
+            // const tokenlistpath = '../../Accountfile/json/tokenlist.json';
+            //头部事件
+            util.event('lay-header-event', {
+                //左侧菜单事件
+                menuLeft: function (othis) {
+                    layer.msg('展开左侧菜单的操作', { icon: 0 });
+                }
+                , menuRight: function () {
+                    layer.open({
+                        type: 1
+                        , content: '<table class="layui-hide" id="test" lay-filter="test"></table>'
+                        , area: ['260px', '100%']
+                        , offset: 'rt' //右上角
+                        , anim: 5
+                        , shadeClose: true
+                    });
+                }
+            });
+
+            //触发事件
+            var active = {
+                display1: function () {
+                    var container = document.getElementById('container');
+                    var oDiv = container.getElementsByClassName('tab1');
+                    oDiv[0].style.display = "block";
+                    oDiv[1].style.display = "none";
+                    oDiv[2].style.display = "none";
+                    oDiv[3].style.display = "none";
+                    oDiv[4].style.display = "none";
+                }
+                , display2: function () {
+                    var container = document.getElementById('container');
+                    var oDiv = container.getElementsByClassName('tab1');
+                    oDiv[0].style.display = "none";
+                    oDiv[1].style.display = "block";
+                    oDiv[2].style.display = "none";
+                    oDiv[3].style.display = "none";
+                    oDiv[4].style.display = "none";
+                }
+                , display3: function () {
+                    var container = document.getElementById('container');
+                    var oDiv = container.getElementsByClassName('tab1');
+                    oDiv[0].style.display = "none";
+                    oDiv[1].style.display = "none";
+                    oDiv[2].style.display = "block";
+                    oDiv[3].style.display = "none";
+                    oDiv[4].style.display = "none";
+                }
+                , display4: function () {
+                    var container = document.getElementById('container');
+                    var oDiv = container.getElementsByClassName('tab1');
+                    oDiv[0].style.display = "none";
+                    oDiv[1].style.display = "none";
+                    oDiv[2].style.display = "none";
+                    oDiv[3].style.display = "block";
+                    oDiv[4].style.display = "none";
+                }
+                , display5: function () {
+                    var container = document.getElementById('container');
+                    var oDiv = container.getElementsByClassName('tab1');
+                    oDiv[0].style.display = "none";
+                    oDiv[1].style.display = "none";
+                    oDiv[2].style.display = "none";
+                    oDiv[3].style.display = "none";
+                    oDiv[4].style.display = "block";
+                }
+            };
+
+            $('.Setjump').on('click', function () {
+                var othis = $(this), type = othis.data('type');
+                active[type] ? active[type].call(this, othis) : '';
+            });
+            $('.addnet').on('click', function () {
+                var id = addnet.id.value;
+                var net = addnet.net.value;
+                var chainid = addnet.chainid.value;
+                var url = addnet.url.value;
+                console.log(id);
+                addNet(id, net, chainid, url);
+                setTimeout(() => { tableIns.reload(); }, 500);
+
+            });
+            $('.shuaxing1').on('click', function () {
+                setTimeout(() => { tableIn2.reload(); }, 500);
+            });
+            $('.shuaxing2').on('click', function () {
+                // addToken();
+                setTimeout(() => { tableIn3.reload(); }, 500);
+
+            });
+            $('.token').on('click', function () {
+                selectnet();
+            });
+
+            selectnet();
+            function selectnet() {
+                $.ajax({
+                    url: netpath,
+                    dataType: 'json',
+                    type: 'get',
+                    success: function (data) {
+                        console.log(data);
+                        //下面会提到这个data是什么值
+                        //使用循环遍历，给下拉列表赋值
+                        $('#selectnet').empty();
+                        $.each(data.data, function (index, value) {
+                            console.log(value);
+                            $('#selectnet').append(new Option(value.id, value.net));// 下拉菜单里添加元素
+                        });
+                        var batch = $('#selectnet').val();
+                        // $("#address").text("当前操作账户为 ：" + batch);
+                        console.log(batch);
+                        // (new Option(value.id, value.address));
+                        layui.form.render("select");//重新渲染 固定写法
+                    }
+                })
+            }
+            form.on('select(selectnet)', function (data) {
+                // console.log(data.elem); //得到select原始DOM对象
+                var address = $('#selectaccount').val();
+                // console.log(data.othis); //得到美化后的DOM对象
+                console.log(data.value); //得到被选中的值
+                //console.log(data.elem[data.elem.selectedIndex].text); //得到文本内容
+                tableIn3.reload();
+
+            });
+            // $('.fuck').on('click', function () {
+            //     // form.on('tool(text)', function (obj) {
+            //     //     var data = $(obj.elem);
+            //     //     console.log(data)
+            //     //     var id = Number(data.parents('tr').first().find('td').eq(1).text());
+
+            //     //     //选中or未选中
+            //     //     //var check = obj.elem.checked;
+            //     //     //复选框状态
+            //     //     //  var checkStatus = table.checkStatus('users');
+            //     //     //如果选中
+            //     // });
+            //     // console.log($('table#test tr:eq(0) td:eq(0) div:eq(0)').html());
+
+            //     $('#test').find('tr').remove();
+            //     // $('table#test').css('display', 'none');
+            //     // $('table#test tr:eq(1) td:nth-child(1)').html(); 
+            //     // $("table#test").find("tr:eq("+(n+1)+")").remove();
+            // })
+
+            var tableIns = table.render({
+                elem: '#test'
+                , url: netpath
+                , title: '网络列表'
+                , cols: [[
+                    { field: 'id', title: '序号', width: 100, fixed: 'left', unresize: true, sort: true, filter: true }
+                    , { field: 'net', title: '地址', minwidth: 150, filter: true }
+                    , { field: 'chainid', title: 'chainid', width: 70, filter: true }
+                    , { field: 'url', title: '区块链浏览器', width: 60, filter: true }
+                    , { fixed: 'right', title: '操作', toolbar: '#barDemo1', width: 80, filter: true }
+                ]]
+
+            });
+            var tableIn2 = table.render({
+                elem: '#test1'
+                , url: accountpath
+                , title: '用户数据表'
+                , cols: [[
+                    { field: 'id', title: 'id', width: 150, fixed: 'left', unresize: true, sort: true }
+                    , { field: 'address', title: '地址', minwidth: 150 }
+                    // , { field: 'Publickey', title: '公钥', minwidth: 150 }
+                    //, { field: 'balance', title: '余额', width: 60 }
+                    , { fixed: 'right', title: '操作', toolbar: '#barDemo', width: 200 }
+                ]]
+            });
+            var tableIn3 = table.render({
+                elem: '#test2'
+                , url: tokenlistpath
+                , title: '用户数据表'
+                , parseData: function (res) {
+                    var net = $('#selectnet').val();
+                    return {
+                        "code": res.code, //解析接口状态
+                        "data": res[net] //解析数据列表
+                    };
+                }
+                , cols: [[
+                    { field: 'symbol', title: '代币符号', width: 150, fixed: 'left', unresize: true, sort: true }
+                    , { field: 'address', title: '合约地址', minwidth: 150 }
+                    // , { field: 'Company', title: '单位', minwidth: 150 }
+                    //, { field: 'balance', title: '余额', width: 60 }
+                    // , { fixed: 'right', title: '操作', toolbar: '#barDemo1', width: 120 }
+                ]]
+            });
+
+            //监听行工具事件
+            table.on('tool(test)', function (obj) {
+                var data = obj.data;
+                console.log(obj)
+                if (obj.event === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        if (obj.data.id.match("Account")) {
+                            alert("不能删除原生账号!")
+                        } else {
+                            remove1(obj.data.id);
+                            setTimeout(() => { tableIns.reload(); }, 500);
+                            layer.close(index);
+                        }
+                    });
+                } else if (obj.event === 'edit1') {
+                    var PSW = pass2.value;
+                    var id = obj.data.id;
+                    chackpass(PSW, id)
+                }
+            });
+
+            table.on('tool(test1)', function (obj) {
+                var data = obj.data;
+                var PrK = obj.data.PrivateKey;
+                console.log(obj)
+                if (obj.event === 'del') {
+                    layer.confirm('真的删除行么', function (index) {
+                        if (obj.data.id.match("Account")) {
+                            alert("不能删除原生账号!")
+                        } else {
+                            remove2(obj.data.id);
+                            setTimeout(() => { tableIn2.reload(); }, 500);
+                            layer.close(index);
+                        }
+                    });
+                } else if (obj.event === 'edit') {
+                    // var PSW=prompt( "请输入您的密码?" );
+                    // var PSW = pass2.value;
+                    var PSW;
+                    var id = obj.data.id;
+                    layer.prompt({
+                        formType: 1,
+                        value: '',
+                        title: '请输入密码',
+                        area: ['800px', '350px'] //自定义文本域宽高
+                    }, function (PSW, index, elem) {
+                        chackpass(PSW, PrK)
+                        layer.close(index);
+                    });
+                    // chackpass(PSW, PrK)
+                }
+            });
+
+            table.on('tool(test1)', function (obj) {
+                var data = obj.data;
+                obj.event === 'qr';
+                console.log(data.address);
+
+                // console.log(data.elem); //得到select原始DOM对象
+                // $("#address").text("当前操作账户为 ：" + data.value);
+                // var net = $('#selectnet').val();
+                // getbalance(net, data.value);
+                document.getElementById("qrcode").innerHTML = "";
+
+                $('#qrcode').qrcode({
+                    render: "canvas",//设置渲染方式 （有两种方式 table和canvas，默认是canvas）
+                    width: 150,//宽度
+                    height: 150,//高度
+                    correctLevel: 0,//纠错等级
+                    text: 'ethereum:' + data.address,
+                    // background:"#00FF00",//背景色
+                    // foreground:"#FFFF00",//前景色
+                });
+
+                
+                // var qrcode = $('#qrcode').qrcode();
+                // document.getElementById("qr").value = qrcode;
+                // console.log(data.value); //得到被选中的值
+                // console.log(data.elem[data.elem.selectedIndex].text); //得到文本内容
+                // $("#Balanotice").text("余额刷新于：" + Date());
+                // layer.open({
+                //     title: "二维码",
+                //     type: 1,
+                //     content: $('#qrcode'),
+                //     shade: 0, //这里content是一个DOM，注意：最好该元素要存放在body最外层，否则可能被其它的相对元素所影响
+                // });
+            });
+
+            $("#1").click(function(){
+                $("#2").toggle();
+            });
+
+            //创建一个编辑器
+        });
+
+    </script>
+</body>
+
+</html>

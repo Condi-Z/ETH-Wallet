@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>ETH Wallet</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <script src="../js/transaction.js" charset="utf-8"></script>
+
+</head>
+
+<body>
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header layui-bg-gray">
+            <div class="layui-logo  layui-bg-gray">Code</div>
+            <!-- 头部区域（可配合layui 已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left ">
+                <!-- 移动端显示 -->
+                <li class="layui-nav-item"><a href="assets.html">资产</a></li>
+                <li class="layui-nav-item"><a href="transaction.html">交易</a></li>
+                <li class="layui-nav-item layui-this"><a href="transaction.html">记录</a></li>
+                <li class="layui-nav-item"><a href="setup.html">设置</a></li>
+                <li class="layui-nav-item"><a href="dapp.html">应用</a></li>
+            </ul>
+        </div>
+
+        <div style="padding: 100px;">
+            <!-- 内容主体区域 -->
+            <section>
+                <fieldset class="layui-elem-field layui-field-title" style="text-align:center;font-size: 100px;">
+                    <legend>交易记录</legend>
+                </fieldset>
+                <table class="layui-hide" id="test" lay-filter="test"></table>
+            </section>
+
+
+        </div>
+        <div class="layui-footer">
+            <!-- 底部固定区域 -->
+            <h3 id="address"></h3>
+        </div>
+        <script src="./layui/layui.js"></script>
+        <script>
+            
+            var fs = require("fs")
+            layui.use(['element', 'layer', 'util', 'table', 'form'], function () {
+                var element = layui.element
+                    , layer = layui.layer
+                    , util = layui.util
+                    , $ = layui.$
+                    , table = layui.table
+                    , form = layui.form;
+                //项目调试路径
+                const recordpath = '../Accountfile/json/transaction.json';
+
+
+                // var id = id.value;
+                // var time = time.value;
+                // var hash = hash.value;
+                // var from = from.value;
+                // var to = to.value;
+                // var value = value.value;
+                // var state = state.value;
+
+                var tableIns = table.render({
+                    elem: '#test'
+                    , page: true
+                    , url: recordpath
+                    , title: '交易记录'
+                    , cols: [[
+                        // { field: 'id', title: '序号', width: 100, fixed: 'left', unresize: true, sort: true }
+                        // , { field: 'time', title: '交易时间', width: 50, sort: true }
+                        // , { field: 'Hash', title: '交易hash', width: 50 }
+                        // , { field: 'from', title: '交易发起者', width: 100 }
+                        // , { fixed: 'to', title: '交易接收者', width: 100 }
+                        // , { fixed: 'value', title: '金额', width: 50 }
+                        // , { fixed: 'state', title: '状态', width: 50, sort: true }
+                    { field: 'id', title: 'ID', width: 100, sort: true, fixed: 'left' }
+                        , { field: 'time', title: '交易时间', width: 150,  sort: true }
+                        , { field: 'Hash', title: '交易hash', width: 275}
+                        , { field: 'from', title: '交易发起者', width: 150 }
+                        , { field: 'to', title: '交易接收者', width: 150 }
+                        , { field: 'value', title: '金额', width: 75}
+                        , { field: 'state', title: '状态', width: 75, sort: true }
+                    ]]
+
+
+                });
+                
+
+
+
+
+            });
+            setTimeout(function(){location.reload()},15000);
+
+
+        </script>
+    </div>
+
+</body>

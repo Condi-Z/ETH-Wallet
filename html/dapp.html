@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>ETH Wallet</title>
+    <link rel="stylesheet" href="./layui/css/layui.css">
+    <script src="../js/dapp.js" charset="utf-8"></script>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <script type="text/javascript" src="../js/web3.min.js"></script>
+</head>
+
+<body>
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header layui-bg-gray">
+            <div class="layui-logo  layui-bg-gray">Code</div>
+            <!-- 头部区域（可配合layui 已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left ">
+                <!-- 移动端显示 -->
+                <li class="layui-nav-item"><a href="assets.html">资产</a></li>
+                <li class="layui-nav-item"><a href="transaction.html">交易</a></li>
+                <li class="layui-nav-item"><a href="record.html">记录</a></li>
+                <li class="layui-nav-item"><a href="setup.html">设置</a></li>
+                <li class="layui-nav-item layui-this"><a href="dapp.html">应用</a></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item  layui-show-md-inline-block">
+                    <form class="layui-form layui-form-pane" action="">
+                        <div class="layui-form-item">
+                            <label class="layui-form-label">账户:</label>
+                            <div class="layui-input-inline">
+                                <select id="selectaccount" lay-filter="selectaccount">
+                                    <!-- <option value="">请选择省</option> -->
+                                    <!-- <option value="浙江" selected="">浙江省</option>
+                                <option value="你的工号">江西省</option> -->
+                                </select>
+                            </div>
+                        </div>
+                    </form>
+                    <!-- <a href="javascript:;">
+                        <img src="https://ss3.baidu.com/9fo3dSag_xI4khGko9WTAnF6hhy/baike/pic/item/37d12f2eb9389b500dacecf68c35e5dde6116ec6.jpg"
+                            class="layui-nav-img">
+                        Account
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">Your Profile</a></dd>
+                        <dd><a href="">Settings</a></dd>
+                        <dd><a href="">Sign out</a></dd>
+                    </dl> -->
+                </li>
+                <li class="layui-nav-item" lay-header-event="menuRight" lay-unselect>
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-more-vertical"></i>
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div>
+            <!-- 内容主体区域 -->
+            <div style="padding: 100px;">
+                <h1 class="layui-col-xs12">应用</h1>
+
+                <h1 class="layui-col-xs12">&nbsp;</h1>
+                <form class="layui-form layui-form-pane layui-col-xs5" action="" style="color: #4d6efb;">
+                    <div class=" layui-inline ">
+                        <label class=" layui-form-label"
+                            style="background-color: #f5f5f5 ;border-color: #f5f5f5;">选择网络</label>
+                        <div class="layui-input-inline">
+                            <select id="selectnet" lay-filter="selectnet">
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+                    <legend>💻</legend>
+                </fieldset>
+                <div class="layui-col-xs12">&nbsp;</div>
+                <div class="layui-col-xs12">&nbsp;</div>
+                <div class="layui-col-xs12">&nbsp;</div>
+                <div class="layui-col-xs12">&nbsp;</div>
+                <!-- <div style="padding: 100px;">
+                
+                <h1 class="layui-col-xs12">&nbsp;</h1>
+                <form class="layui-form layui-form-pane layui-col-xs5" action="" style="color: #4d6efb;">
+                    <div class=" layui-inline ">
+                        <label class=" layui-form-label"
+                            style="background-color: #f5f5f5 ;border-color: #f5f5f5;">选择网络</label>
+                        <div class="layui-input-inline">
+                            <select id="selectnet" lay-filter="selectnet">
+                            </select>
+                        </div>
+                    </div>
+                </form>
+            </div> -->
+                <h1>应用一</h1>
+                <div class="layui-col-xs12">&nbsp;</div>
+                <!-- <input type="text" name="" id="message"><button id="sendmessage">sendmessage</button> -->
+                <div class="layui-form-item layui-col-xs12">
+                    <button class="layui-btn layui-btn-radius layui-btn-warm layui-col-xs2" id="getmessage"
+                        style="font-weight:600;font-size:18px;">getmessage</button>
+                    <div class="layui-col-md6">
+                        <div class="layui-panel">
+                            <div style="padding: 10px;">
+                                <div>message is :</div>
+                                <div id=state1></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-footer">
+                    <!-- 底部固定区域 -->
+                    <h3 id="address"></h3>
+                </div>
+
+            </div>
+            <script src="./layui/layui.js"></script>
+            <script type='text/javascript' src='http://cdn.staticfile.org/jquery/2.1.1/jquery.min.js'></script>
+            <script src="https://cdn.bootcss.com/jquery.qrcode/1.0/jquery.qrcode.min.js"></script>
+            <script>
+                //JS 
+                layui.use(['element', 'layer', 'util', 'form'], function () {
+                    var element = layui.element
+                        , layer = layui.layer
+                        , util = layui.util
+                        , form = layui.form
+                        , $ = layui.$;
+                    //项目调试路径
+                    let { ipcRenderer } = require('electron');
+                    ipcRenderer.on("balance", (event, balance) => {
+                        console.log(balance);
+                        $(".balance").empty();
+                        for (var i = 0; i < balance.value.length; i++) {
+                            var p;
+                            if (balance.value[i].symbol == "ETH") {
+                                if (balance.value[i].balance == 0) {
+                                    p = 1
+                                } else {
+                                    p = 1000000000000000000;
+                                }
+                                a = '<h1 class="layui-col-xs3">' + balance.value[i].symbol + '</h1><h1 class="layui-col-xs9">' + (balance.value[i].balance / p) + '</h1>';
+                            } else {
+                                a = '<h1 class="layui-col-xs3">' + balance.value[i].symbol + '</h1><h1 class="layui-col-xs9">' + (balance.value[i].balance / 1) + '</h1>';
+
+                            }
+                            /*$(".stage") 是jquery选择到一个class为stage的元素
+                             append是将我们a添加到他的子节点（子元素）中 */
+                            $(".balance").append(a);
+                        }
+                    })
+                    const accountpath = '../Accountfile/json/account.json';
+                    const netpath = '../Accountfile/json/net.json';
+                    //打包路径
+                    // const accountpath = '../../Accountfile/json/account.json';
+                    // const netpath = '../../Accountfile/json/net.json';
+
+
+                    //readNet();
+                    //头部事件
+                    form.on('select(selectaccount)', function (data) {
+                        // console.log(data.elem); //得到select原始DOM对象
+                        $("#address").text("当前操作账户为 ：" + data.value);
+                        var net = $('#selectnet').val();
+                        dapp(net, data.value);
+                        $('#qrcode').qrcode({
+                            render: "canvas",//设置渲染方式 （有两种方式 table和canvas，默认是canvas）
+                            width: 150,//宽度
+                            height: 150,//高度
+                            correctLevel: 0,//纠错等级
+                            text: 'ethereum:' + data.value,
+                            // background:"#00FF00",//背景色
+                            // foreground:"#FFFF00",//前景色
+                        });
+
+                    });
+                    form.on('select(selectnet)', function (data) {
+                        // console.log(data.elem); //得到select原始DOM对象
+                        var address = $('#selectaccount').val();
+                        dapp(data.value, address);
+                        // $('#qrcode').qrcode({
+                        //     render:"canvas",//设置渲染方式 （有两种方式 table和canvas，默认是canvas）
+                        //     width: 150,//宽度
+                        //     height: 150,//高度
+                        //     correctLevel:0,//纠错等级
+                        //     text: 'ethereum:' + data.value,
+                        //     // background:"#00FF00",//背景色
+                        //     // foreground:"#FFFF00",//前景色
+                        // });
+                    });
+
+                    $.ajax({
+                        url: accountpath,
+                        dataType: 'json',
+                        type: 'get',
+                        success: function (data) {
+                            //下面会提到这个data是什么值
+                            //使用循环遍历，给下拉列表赋值
+                            $.each(data.data, function (index, value) {
+                                $('#selectaccount').append(new Option(value.id, value.address));// 下拉菜单里添加元素
+                            });
+                            var batch = $('#selectaccount').val();
+                            $("#address").text("当前操作账户为 ：" + batch);
+                            // (new Option(value.id, value.address));
+                            layui.form.render("select");//重新渲染 固定写法
+                        }
+                    })
+
+
+                    $.ajax({
+                        url: netpath,
+                        dataType: 'json',
+                        type: 'get',
+                        success: function (data) {
+                            //下面会提到这个data是什么值
+                            //使用循环遍历，给下拉列表赋值
+                            $.each(data.data, function (index, value) {
+                                $('#selectnet').append(new Option(value.id, value.net));// 下拉菜单里添加元素
+                            });
+                            var batch = $('#selectnet').val();
+                            // $("#address").text("当前操作账户为 ：" + batch);
+                            // (new Option(value.id, value.address));
+                            layui.form.render("select");//重新渲染 固定写法
+                        }
+                    })
+                    util.event('lay-header-event', {
+                        //左侧菜单事件
+                        menuLeft: function (othis) {
+                            layer.msg('展开左侧菜单的操作', { icon: 0 });
+                        }
+                        , menuRight: function () {
+                            layer.open({
+                                type: 1
+                                , content: '<div style="padding: 15px;">处理右侧面板的操作</div>'
+                                , area: ['260px', '100%']
+                                , offset: 'rt' //右上角
+                                , anim: 5
+                                , shadeClose: true
+                            });
+                        }
+                    });
+
+                });
+
+            </script>
+</body>
+
+</html>
