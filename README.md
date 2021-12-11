@@ -6,6 +6,10 @@
 
 基于现在市面上没有全中文的以太坊钱包,类似metamask的chrome插件需要科学上网才能下载,对于非专业人士而言略显困难,出于科研的目的开发出以太坊中文钱包,供大家使用.
 
+**一下为项目说明,供开发人员或计算机专业相关人员调试使用,其他人员可直接下载exe文件进行安装使用**
+
+**项目为开源项目 , 仅供学习,科研使用 , 禁止一切盈利行为 , 首发 , 其他版本皆为盗版!!!!**
+
 ### 2.项目文件说明
 
 本钱包项目基于electron框架,以及web3js,nodejs,html等语言进行开发.
@@ -123,13 +127,38 @@ win32
 
 8. 更新完成后会自动打开exe文件.更新完成后版本应为服务器上对应版本![微信截图_20211211150629](https://s2.loli.net/2021/12/11/bltzPW3TmoNw6kA.png)
 
-### 7.安全
+### 7.在Linux上运行
+
+1. 首先将程序打包成linux运行程序
+
+2. ```
+   electron-packager . 'ETH Wallet' --platform=linux --arch=x64 --ignore=./Accountfile --extra-resource=./Accountfile --out=./out --asar --app-version=15.1.2 --electron-zip-dir=./electron-zip
+   ```
+
+3. 一下为在kali上的运行演示 , 将文件导入linux系统中![微信截图_20211211154459](https://s2.loli.net/2021/12/11/7yINwxtUO3olemJ.png)
+
+4. 右键在终端中打开,输入
+
+   ```
+   chmod 7777 ./ETHWallet
+   在linux上运行  chmod 7777 ./electron (文件名)注意文件名中间不能加空格
+   ```
+
+5. ```
+   ./ETHWallet --no-sandbox
+   ```
+
+   运行,一定要加[sandbox](https://blog.csdn.net/qq_39324871/article/details/108535892) , 未授权应用 , 也可以通过[授权应用](https://blog.csdn.net/qq_39324871/article/details/108535892)不用sandbox![微信截图_20211211155008](https://s2.loli.net/2021/12/11/5nS8PGMjwuYlTHh.png)
+
+   程序运行截图:![微信截图_20211211155042](https://s2.loli.net/2021/12/11/kPyQ9HUi7YoegtJ.png)
+
+### 8.安全
 
 在设置-安全中输入当前钱包密码可重置钱包及交易记录,并可以查看当前账户的助记符
 
 **<u>警告!!!   钱包重置后无法恢复,将删除所有账户信息,请提前记好助记符!!!!!**</u>
 
-### 8.DPAA应用功能
+### 9.DPAA应用功能
 
 可将以太坊上任何链编辑的智能合约与钱包进行交互,需要提供合约abi , 并可以调用合约上的方法 , 当前仅实现Demo,后续随缘开发.
 
