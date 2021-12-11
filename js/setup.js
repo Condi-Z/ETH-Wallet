@@ -294,13 +294,20 @@ ipcRenderer.on("loads", (a, b) => {
 
 ipcRenderer.on("install", () => {
     layer.confirm("下载完成，是否安装", { icon: 3, title: '安装' }, function (index) {
-        //do something
-        exec('./Eth Wallet 2.0.exe', function (err, data) {
+        //项目打包路径
+        exec('../../../Eth Wallet 2.0.exe', function (err, data) {
             console.log(err)
             console.log(data.toString());
         })
         layer.close(index);
         });
+        //项目调试路径
+        // exec('./Eth Wallet 2.0.exe', function (err, data) {
+        //     console.log(err)
+        //     console.log(data.toString());
+        // })
+        // layer.close(index);
+        // });
     
 })
 
