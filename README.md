@@ -53,11 +53,13 @@ npm start
 
 ### 4.打包方法
 
-**<u>警告!!!   打包前请将html , js , index.js 文件中的路径更改为打包路径!!!!!**</u>
+**<u>警告!!!   打包前请将html , js , index.js 文件中的路径更改为打包路径!!!!!  (此处仅放两个重要文件的打包路径 , 其他文件中也有需要更改的路径)**</u>
 
 ![微信截图_20211211144421](https://s2.loli.net/2021/12/11/DjWHvef1rcdO8qg.png)
 
 ![微信截图_20211211145355](https://s2.loli.net/2021/12/11/NHMuazZphLeCUfw.png)
+
+![微信截图_20211211175159](https://s2.loli.net/2021/12/11/Y8eNbWuzhVdEDPO.png)
 
 打包依赖electron-packager方法,首先确保已安装该模块
 
