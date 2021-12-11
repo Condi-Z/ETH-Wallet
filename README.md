@@ -104,6 +104,8 @@ win32
 
 ### 6.通过服务器进行软件升级
 
+注意!!update文件夹中无2.0.exe安装包,需要自取[百度云链接](https://pan.baidu.com/s/1Mu5nC5yuGoKxEcOhDa-evA)  , 提取码:1111
+
 1. 首先将update文件夹另开一个cmd终端
 
 2. 安装本地服务器
