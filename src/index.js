@@ -882,7 +882,7 @@ ipcMain.on('reset3', (event) => {
   })
 
   createWindow("../html/register.html");
-  app.exit();
+  //app.exit();
 })
 
 ipcMain.on('Cpass1', (event, PSW, PrK) => {
