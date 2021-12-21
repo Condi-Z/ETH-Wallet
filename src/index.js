@@ -498,7 +498,7 @@ ipcMain.on('getbalance', (event, net, address) => {
   // })
 })
 
-ipcMain.on('sendbalance', (event, net, address, address1, value1, token, Price) => {
+ipcMain.on('sendbalance', (event, net, address, address1, value1, token, Price , Price2) => {
   event.reply('sendbalance', "转账")
   console.log(net);
   console.log("from====>" + address);
@@ -511,109 +511,216 @@ ipcMain.on('sendbalance', (event, net, address, address1, value1, token, Price) 
   var date1 = '';
   var toaddress;
   var transferAmount;
-  var Price1 = Price;
-  web3.eth.getGasPrice().then(function () {
-    console.log("gasPrice1===>" + Price1);
+  if (Price == ""){
+    var Price1 = "22000000";
+    web3.eth.getGasPrice().then(function () {
+      console.log("gasPrice1===>" + Price1);
+      if (token == "ETH") {
+        var gaspricevalue = web3.utils.toWei(Price1.toString(), 'wei');
+        console.log("gaspricevalue===>" + gaspricevalue);
+      } else {
+        var gasPrice2 = Price1 * 10;
+        console.log("gasPrice2===>" + gasPrice2);
+        var gaspricevalue = 10e9;
+        console.log("gaspricevalue===>" + gaspricevalue);
+  
+      }
+      web3.eth.getTransactionCount(address, web3.eth.defaultBlock.pending).then(function (nonce) {
+        fs.readFile(netpath, function (err, data) {
+          if (err) {
+            return console.error(err);
+          }
+          var person = data.toString();//将二进制的数据转换为字符串
+          person = JSON.parse(person);
+          console.log(pass);
+          for (k = 0; k < person.data.length; k++) {
+            if (person.data[k].net == net) {
+              console.log("k=========>" + k);
+              console.log("chainid===>" + person.data[k].chainid);
+              console.log("toaddress===>" + toaddress);
+              console.log("address===>" + address);
+              console.log("date1===>" + date1);
+  
+              var txData = {
+                // nonce每次++，以免覆盖之前pending中的交易
+                chainId: web3.utils.toHex(person.data[k].chainid),
+                nonce: web3.utils.toHex(nonce++),
+                // 设置gasLimit和gasPrice
+                gasLimit: web3.utils.toHex(99000),
+                gasPrice: web3.utils.toHex(gaspricevalue),
+                // 要转账的哪个账号  
+                to: toaddress,
+                // 从哪个账号转
+                from: address,
+                // 0.001 以太币
+                value: transferAmount,
+  
+                data: date1
+              }
+              //console.log(web3.utils.toHex(10e17));
+              var tx = new Tx(txData);
+              fs.readFile(accountpath, function (err, data1) {
+                if (err) {
+                  return console.error(err);
+                }
+                var person1 = data1.toString();//将二进制的数据转换为字符串
+                person1 = JSON.parse(person1);
+                console.log(pass);
+                for (k = 0; k < person1.data.length; k++) {
+                  if (person1.data[k].address == address) {
+                    console.log(k)
+                    let o = decrypt(person1.data[k].PrivateKey);
+  
+                    const privateKey = new Buffer.from(o.toString(), 'hex');
+                    tx.sign(privateKey);
+                    var serializedTx = tx.serialize().toString('hex');
+                    console.log("私钥=============》" + o.toString());
+                    web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'), function (err, hash) {
+                      if (!err) {
+                        console.log(hash);
+                        event.sender.send("transaction1", 0, hash, address, address1, value1, Price);
+                      } else {
+                        console.error(err);
+                        event.sender.send("transaction2", 1, address, address1, value1, Price);
+                      }
+                    });
+                  }
+                }
+              })
+            }
+          }
+        })
+      })
+    })
+  
     if (token == "ETH") {
-      var gaspricevalue = web3.utils.toWei(Price1.toString(), 'wei');
-      console.log("gaspricevalue===>" + gaspricevalue);
+      sendvalue = value1;
+      transferAmount = web3.utils.toHex(web3.utils.toWei(sendvalue.toString(), 'ether'));
+      console.log("transferAmount===>" + transferAmount);
+      console.log("hextransferAmount===>" + web3.utils.toHex(transferAmount));
+      toaddress = address1;
     } else {
-      var gasPrice2 = Price1 * 10;
-      console.log("gasPrice2===>" + gasPrice2);
-      var gaspricevalue = 10e9;
-      console.log("gaspricevalue===>" + gaspricevalue);
-
-    }
-    web3.eth.getTransactionCount(address, web3.eth.defaultBlock.pending).then(function (nonce) {
-      fs.readFile(netpath, function (err, data) {
+      fs.readFile(tokenlistpath, function (err, data) {
         if (err) {
           return console.error(err);
-        }
-        var person = data.toString();//将二进制的数据转换为字符串
-        person = JSON.parse(person);
-        console.log(pass);
-        for (k = 0; k < person.data.length; k++) {
-          if (person.data[k].net == net) {
-            console.log("k=========>" + k);
-            console.log("chainid===>" + person.data[k].chainid);
-            console.log("toaddress===>" + toaddress);
-            console.log("address===>" + address);
-            console.log("date1===>" + date1);
-
-            var txData = {
-              // nonce每次++，以免覆盖之前pending中的交易
-              chainId: web3.utils.toHex(person.data[k].chainid),
-              nonce: web3.utils.toHex(nonce++),
-              // 设置gasLimit和gasPrice
-              gasLimit: web3.utils.toHex(99000),
-              gasPrice: web3.utils.toHex(gaspricevalue),
-              // 要转账的哪个账号  
-              to: toaddress,
-              // 从哪个账号转
-              from: address,
-              // 0.001 以太币
-              value: transferAmount,
-
-              data: date1
+        } {
+          var person = data.toString();//将二进制的数据转换为字符串
+          person = JSON.parse(person);
+          for (k = 0; k < person[net].length; k++) {
+            if (person[net][k].symbol == token) {
+              toaddress = person[net][k].address;
+              date1 = '0x' + 'a9059cbb' + addPreZero(address1.substr(2)) + addPreZero(web3.utils.toHex(value1).substr(2));
+              transferAmount = '0x00';
             }
-            //console.log(web3.utils.toHex(10e17));
-            var tx = new Tx(txData);
-            fs.readFile(accountpath, function (err, data1) {
-              if (err) {
-                return console.error(err);
-              }
-              var person1 = data1.toString();//将二进制的数据转换为字符串
-              person1 = JSON.parse(person1);
-              console.log(pass);
-              for (k = 0; k < person1.data.length; k++) {
-                if (person1.data[k].address == address) {
-                  console.log(k)
-                  let o = decrypt(person1.data[k].PrivateKey);
-
-                  const privateKey = new Buffer.from(o.toString(), 'hex');
-                  tx.sign(privateKey);
-                  var serializedTx = tx.serialize().toString('hex');
-                  console.log("私钥=============》" + o.toString());
-                  web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'), function (err, hash) {
-                    if (!err) {
-                      console.log(hash);
-                      event.sender.send("transaction1", 0, hash, address, address1, value1, Price);
-                    } else {
-                      console.error(err);
-                      event.sender.send("transaction2", 1, address, address1, value1, Price);
-                    }
-                  });
-                }
-              }
-            })
           }
         }
       })
+    }
+  }else{
+    var Price2 = Price;
+    web3.eth.getGasPrice().then(function () {
+      console.log("gasPrice1===>" + Price2);
+      if (token == "ETH") {
+        var gaspricevalue = web3.utils.toWei(Price2.toString(), 'wei');
+        console.log("gaspricevalue===>" + gaspricevalue);
+      } else {
+        var gasPrice2 = Price2 * 10;
+        console.log("gasPrice2===>" + gasPrice2);
+        var gaspricevalue = 10e9;
+        console.log("gaspricevalue===>" + gaspricevalue);
+  
+      }
+      web3.eth.getTransactionCount(address, web3.eth.defaultBlock.pending).then(function (nonce) {
+        fs.readFile(netpath, function (err, data) {
+          if (err) {
+            return console.error(err);
+          }
+          var person = data.toString();//将二进制的数据转换为字符串
+          person = JSON.parse(person);
+          console.log(pass);
+          for (k = 0; k < person.data.length; k++) {
+            if (person.data[k].net == net) {
+              console.log("k=========>" + k);
+              console.log("chainid===>" + person.data[k].chainid);
+              console.log("toaddress===>" + toaddress);
+              console.log("address===>" + address);
+              console.log("date1===>" + date1);
+  
+              var txData = {
+                // nonce每次++，以免覆盖之前pending中的交易
+                chainId: web3.utils.toHex(person.data[k].chainid),
+                nonce: web3.utils.toHex(nonce++),
+                // 设置gasLimit和gasPrice
+                gasLimit: web3.utils.toHex(99000),
+                gasPrice: web3.utils.toHex(gaspricevalue),
+                // 要转账的哪个账号  
+                to: toaddress,
+                // 从哪个账号转
+                from: address,
+                // 0.001 以太币
+                value: transferAmount,
+  
+                data: date1
+              }
+              //console.log(web3.utils.toHex(10e17));
+              var tx = new Tx(txData);
+              fs.readFile(accountpath, function (err, data1) {
+                if (err) {
+                  return console.error(err);
+                }
+                var person1 = data1.toString();//将二进制的数据转换为字符串
+                person1 = JSON.parse(person1);
+                console.log(pass);
+                for (k = 0; k < person1.data.length; k++) {
+                  if (person1.data[k].address == address) {
+                    console.log(k)
+                    let o = decrypt(person1.data[k].PrivateKey);
+  
+                    const privateKey = new Buffer.from(o.toString(), 'hex');
+                    tx.sign(privateKey);
+                    var serializedTx = tx.serialize().toString('hex');
+                    console.log("私钥=============》" + o.toString());
+                    web3.eth.sendSignedTransaction('0x' + serializedTx.toString('hex'), function (err, hash) {
+                      if (!err) {
+                        console.log(hash);
+                        event.sender.send("transaction1", 0, hash, address, address1, value1, Price);
+                      } else {
+                        console.error(err);
+                        event.sender.send("transaction2", 1, address, address1, value1, Price);
+                      }
+                    });
+                  }
+                }
+              })
+            }
+          }
+        })
+      })
     })
-  })
-
-  if (token == "ETH") {
-    sendvalue = value1;
-    transferAmount = web3.utils.toHex(web3.utils.toWei(sendvalue.toString(), 'ether'));
-    console.log("transferAmount===>" + transferAmount);
-    console.log("hextransferAmount===>" + web3.utils.toHex(transferAmount));
-    toaddress = address1;
-  } else {
-    fs.readFile(tokenlistpath, function (err, data) {
-      if (err) {
-        return console.error(err);
-      } {
-        var person = data.toString();//将二进制的数据转换为字符串
-        person = JSON.parse(person);
-        for (k = 0; k < person[net].length; k++) {
-          if (person[net][k].symbol == token) {
-            toaddress = person[net][k].address;
-            date1 = '0x' + 'a9059cbb' + addPreZero(address1.substr(2)) + addPreZero(web3.utils.toHex(value1).substr(2));
-            transferAmount = '0x00';
+  
+    if (token == "ETH") {
+      sendvalue = value1;
+      transferAmount = web3.utils.toHex(web3.utils.toWei(sendvalue.toString(), 'ether'));
+      console.log("transferAmount===>" + transferAmount);
+      console.log("hextransferAmount===>" + web3.utils.toHex(transferAmount));
+      toaddress = address1;
+    } else {
+      fs.readFile(tokenlistpath, function (err, data) {
+        if (err) {
+          return console.error(err);
+        } {
+          var person = data.toString();//将二进制的数据转换为字符串
+          person = JSON.parse(person);
+          for (k = 0; k < person[net].length; k++) {
+            if (person[net][k].symbol == token) {
+              toaddress = person[net][k].address;
+              date1 = '0x' + 'a9059cbb' + addPreZero(address1.substr(2)) + addPreZero(web3.utils.toHex(value1).substr(2));
+              transferAmount = '0x00';
+            }
           }
         }
-      }
-    })
+      })
+    }
   }
 
 
